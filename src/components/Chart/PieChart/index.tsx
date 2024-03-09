@@ -1,11 +1,10 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
-import { PieChart } from 'react-native-chart-kit';
-import { Box } from 'native-base';
+import {Dimensions} from 'react-native';
+import {PieChart} from 'react-native-chart-kit';
+import {Box} from 'native-base';
 
 const PieChartExample = ({Data}: any) => {
-
-  console.log("Data in PieChartExample: ");
+  console.log('Data in PieChartExample: ');
   console.log(Data);
 
   const [population, setPopulation] = React.useState({
@@ -15,7 +14,7 @@ const PieChartExample = ({Data}: any) => {
   });
 
   React.useEffect(() => {
-    if(Data.status === "success") {
+    if (Data.status === 'success') {
       setPopulation({
         easy: (Data.easySolved / Data.totalEasy) * 100,
         medium: (Data.mediumSolved / Data.totalMedium) * 100,
@@ -23,7 +22,6 @@ const PieChartExample = ({Data}: any) => {
       });
     }
   }, [Data]);
-
 
   const data = [
     {
@@ -50,10 +48,7 @@ const PieChartExample = ({Data}: any) => {
   ];
 
   return (
-    <Box
-      justifyContent="center"
-      marginY={5}
-    >
+    <Box justifyContent="center" marginY={5}>
       <PieChart
         data={data}
         width={Dimensions.get('window').width}

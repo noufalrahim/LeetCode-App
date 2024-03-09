@@ -14,8 +14,6 @@
 // import Home from './src/screens/Home';
 // import { NavigationContainer } from '@react-navigation/native';
 
-
-
 // function App(): React.JSX.Element {
 //   const isDarkMode = useColorScheme() === 'dark';
 
@@ -42,24 +40,21 @@
 //         </ScrollView>
 //       </SafeAreaView>
 //     </NativeBaseProvider>
-//     </NavigationContainer> 
+//     </NavigationContainer>
 //   );
 // }
 
-
 // export default App;
 
-
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Box, Image, NativeBaseProvider, StatusBar, Text } from 'native-base';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Box, Image, NativeBaseProvider, StatusBar, Text} from 'native-base';
 import About from './src/screens/About';
 import Home from './src/screens/Home';
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import { useColorScheme } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useColorScheme} from 'react-native';
 function App() {
-
   const Tab = createBottomTabNavigator();
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -72,8 +67,7 @@ function App() {
           backgroundColor="#F89F1B"
           p={4}
           flexDirection="row"
-          justifyContent={"flex-start"}
-        >
+          justifyContent={'flex-start'}>
           <Image
             source={require('./src/assets/images/leetcode.png')}
             alt="LeetCode"
@@ -83,35 +77,36 @@ function App() {
           <Text
             fontSize="xl"
             fontWeight="bold"
-            color={`${isDarkMode ? "black" : "white"}`}
-          >LeetCode</Text>
+            color={`${isDarkMode ? 'black' : 'white'}`}>
+            LeetCode
+          </Text>
         </Box>
         <Tab.Navigator
           screenOptions={{
             tabBarStyle: {
-              backgroundColor: "#F89F1B",
+              backgroundColor: '#F89F1B',
             },
-            tabBarActiveTintColor: "white",
-            tabBarInactiveTintColor: "black",
-          }
-          }
-        >
-          <Tab.Screen name="Home" component={Home}
+            tabBarActiveTintColor: 'white',
+            tabBarInactiveTintColor: 'black',
+          }}>
+          <Tab.Screen
+            name="Home"
+            component={Home}
             options={{
               headerShown: false,
-              tabBarIcon: ({ color, size }) => (
+              tabBarIcon: ({color, size}) => (
                 <Icon name="home" color={color} size={size} />
               ),
-
             }}
           />
-          <Tab.Screen name="About" component={About}
+          <Tab.Screen
+            name="About"
+            component={About}
             options={{
               headerShown: false,
-              tabBarIcon: ({ color, size }) => (
+              tabBarIcon: ({color, size}) => (
                 <Icon name="info-outline" color={color} size={size} />
               ),
-
             }}
           />
         </Tab.Navigator>

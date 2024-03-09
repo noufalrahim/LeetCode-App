@@ -1,18 +1,19 @@
 export const CONSTANTS = {
-    APP_NAME: 'LeetCode',
-    APP_VERSION: '1.0.0',
-    APP_DESCRIPTION: 'LeetCode is a platform for learning and practicing coding skills.',
-    APP_AUTHOR: 'LeetCode',
-}
+  APP_NAME: 'LeetCode',
+  APP_VERSION: '1.0.0',
+  APP_DESCRIPTION:
+    'LeetCode is a platform for learning and practicing coding skills.',
+  APP_AUTHOR: 'LeetCode',
+};
 
 export const API = {
-    BASE_URL: `https://leetcode-stats-api.herokuapp.com/`
-}
+  BASE_URL: 'https://leetcode-stats-api.herokuapp.com/',
+};
 
 export const COLORS = {
-    dark: '#1A1A1A',
-    light: '#FFFFFF'
-}
+  dark: '#1A1A1A',
+  light: '#FFFFFF',
+};
 
 // export const API = {
 //     BASE_URL: 'https://leetcode.com/api',
