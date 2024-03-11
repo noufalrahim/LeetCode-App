@@ -89,6 +89,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+        storeFile file('noufalrahim.keystore')
+        storePassword 'Noufal_Rahim1612'
+        keyAlias 'nr'
+        keyPassword 'Noufal_Rahim1612'
+    }
     }
     buildTypes {
         debug {
