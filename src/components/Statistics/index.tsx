@@ -4,7 +4,7 @@ import React from 'react';
 import {useColorScheme} from 'react-native';
 import {COLORS} from '../../../util/AppConstants';
 
-export default function Statistics({Data}: any) {
+export default function Statistics({Data, allData}: any) {
   const isDarkMode = useColorScheme() === 'dark';
 
   const [statistics, setStatistics] = React.useState({
@@ -23,20 +23,20 @@ export default function Statistics({Data}: any) {
   });
 
   React.useEffect(() => {
-    if (Data.status === 'success') {
+    if (Data[1] != undefined && Data.length > 0 && allData.length > 0) {
       setStatistics({
-        easySolved: Data.easySolved,
-        mediumSolved: Data.mediumSolved,
-        hardSolved: Data.hardSolved,
-        totalEasy: Data.totalEasy,
-        totalMedium: Data.totalMedium,
-        totalHard: Data.totalHard,
+        easySolved: Data[1].count,
+        mediumSolved: Data[2].count,
+        hardSolved: Data[3].count,
+        totalEasy: allData[1].count,
+        totalMedium: allData[2].count,
+        totalHard: allData[3].count,
       });
 
       setPercentage({
-        easy: (Data.easySolved / Data.totalEasy) * 100,
-        medium: (Data.mediumSolved / Data.totalMedium) * 100,
-        hard: (Data.hardSolved / Data.totalHard) * 100,
+        easy: (Data[1].count / allData[1].count) * 100,
+        medium: (Data[2].count / allData[2].count) * 100,
+        hard: (Data[3].count / allData[3].count) * 100,
       });
     }
   }, [Data]);

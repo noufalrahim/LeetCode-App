@@ -1,9 +1,10 @@
 import React from 'react';
-import {Box, HStack, ScrollView, Spinner, Text} from 'native-base';
-import {useColorScheme} from 'react-native';
+import { Box, HStack, Icon, ScrollView, Spinner, Text } from 'native-base';
+import { Linking, Pressable, useColorScheme } from 'react-native';
 import Statistics from '../../components/Statistics';
-import {COLORS} from '../../../util/AppConstants';
+import { COLORS } from '../../../util/AppConstants';
 import Chart from '../../components/Chart/PieChart';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   getGlobalData,
   getSiteAnnouncements,
@@ -23,81 +24,64 @@ import {
 } from '../../api';
 import HeatMap from '../../components/Chart/HeatMap';
 
-export default function Home() {
+export default function Home({ route }: { route: any }) {
   const isDarkMode = useColorScheme() === 'dark';
-
-  const [userData, setUserData] = React.useState({
-    totalSolved: 0,
-    totalQuestions: 0,
-    ranking: 0,
+  const [problemStats, setProblemStats] = React.useState({
+    matchedUser: {
+      submitStatsGlobal: {
+        acSubmissionNum: [
+          {
+            count: 0,
+          },
+        ],
+      },
+    },
+    allQuestionsCount: [
+      {
+        count: 0,
+      },
+    ],
+  });
+  const [todaysQn, setTodaysQn] = React.useState({
+    activeDailyCodingChallengeQuestion: {
+      question: {
+        title: '',
+        acRate: 0,
+      },
+      link: ''
+    }
   });
 
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [userProfileCalendar, setUserProfileCalendar] = React.useState({
+    submissionCalender: {}
+  });
 
-  // const fetchUserInfo = async () => {
-  //   setIsLoading(true);
-  //   const response = await UserInfo('noufalrahim');
-  //   setIsLoading(false);
-  //   setUserData(response);
-  // };
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const fetchUserInfo = async () => {
     setIsLoading(true);
     const username = 'noufalrahim';
-    try{
-      const globalData = await getGlobalData();
-    console.log('Global Data:', globalData);
+    try {
+      const problemsSolvedStats = await getUserProblemsSolved(username);
+      setProblemStats(problemsSolvedStats);
+      const userProfileCalendar = await getUserProfileCalendar(username, 2023);
+      setUserProfileCalendar(userProfileCalendar.matchedUser.userCalendar.submissionCalendar);
 
-    const siteAnnouncements = await getSiteAnnouncements();
-    console.log('Site Announcements:', siteAnnouncements);
-
-    const userPublicProfile = await getUserPublicProfile(username);
-    console.log('User Public Profile:', userPublicProfile);
-
-    const languageStats = await getLanguageStats(username);
-    console.log('Language Stats:', languageStats);
-
-    const skillStats = await getSkillStats(username);
-    console.log('Skill Stats:', skillStats);
-
-    const contestRankingInfo = await getUserContestRankingInfo(username);
-    console.log('Contest Ranking Info:', contestRankingInfo);
-
-    const problemsSolvedStats = await getUserProblemsSolved(username);
-    console.log('Problems Solved Stats:', problemsSolvedStats);
-
-    const userBadges = await getUserBadges('user8162l');
-    console.log('User Badges:', userBadges);
-
-    const userProfileCalendar = await getUserProfileCalendar(username, 2023);
-    console.log('User Profile Calendar:', userProfileCalendar);
-
-    const recentAcSubmissions = await getRecentAcSubmissions(username, 15);
-    console.log('Recent AC Submissions:', recentAcSubmissions);
-
-    const streakCounter = await getStreakCounter();
-    console.log('Streak Counter:', streakCounter);
-
-    const currentTimestamp = await getCurrentTimestamp();
-    console.log('Current Timestamp:', currentTimestamp);
-
-    const questionOfToday = await getQuestionOfToday();
-    console.log('Question of Today:', questionOfToday);
-
-    const codingChallengeMedal = await getCodingChallengeMedal(2023, 7);
-    console.log('Coding Challenge Medal:', codingChallengeMedal);
-
-    const userProfileActiveBadge = await getUserProfileActiveBadge(username);
-    console.log('User Profile Active Badge:', userProfileActiveBadge);
-      // setUserData(response);
-    }catch(error){
+      const questionOfToday = await getQuestionOfToday();
+      setTodaysQn((prev) => ({
+        ...prev,
+        activeDailyCodingChallengeQuestion: questionOfToday.activeDailyCodingChallengeQuestion
+      }));
+    } catch (error) {
       console.error(error);
     }
+    setIsLoading(false);
   };
 
   React.useEffect(() => {
     fetchUserInfo();
   }, []);
+
 
   return isLoading ? (
     <HStack
@@ -112,23 +96,73 @@ export default function Home() {
     <ScrollView
       backgroundColor={isDarkMode ? COLORS.dark : COLORS.light}
       flex={1}>
-      <Chart Data={userData} />
+      <Chart Data={problemStats.matchedUser.submitStatsGlobal.acSubmissionNum} allData={problemStats.allQuestionsCount}/>
       <Box>
+        {
+          problemStats.matchedUser != undefined && (
+            <Text
+              fontSize={20}
+              textAlign={'center'}
+              color={isDarkMode ? COLORS.light : COLORS.dark}>
+              {problemStats.matchedUser.submitStatsGlobal.acSubmissionNum[0].count} / {problemStats.allQuestionsCount[0].count}
+            </Text>
+          )
+        }
         <Text
           fontSize={20}
           textAlign={'center'}
           color={isDarkMode ? COLORS.light : COLORS.dark}>
-          {userData.totalSolved} / {userData.totalQuestions}
-        </Text>
-        <Text
-          fontSize={20}
-          textAlign={'center'}
-          color={isDarkMode ? COLORS.light : COLORS.dark}>
-          Rank: {userData.ranking}
         </Text>
       </Box>
-      <Statistics Data={userData} />
-      <HeatMap Data={userData} />
+       <Statistics Data={problemStats.matchedUser.submitStatsGlobal.acSubmissionNum} allData={problemStats.allQuestionsCount} />
+      <HeatMap Data={userProfileCalendar} /> 
+      <Text
+        fontSize={20}
+        textAlign={'center'}
+        marginBottom={3}
+        color={isDarkMode ? COLORS.light : COLORS.dark}
+      >
+        Today's Question
+      </Text>
+      <Pressable
+      onPress={() => {
+        Linking.openURL('https://leetcode.com'+todaysQn.activeDailyCodingChallengeQuestion.link)
+      }}
+      style={{
+        backgroundColor: '#333',
+        padding: 10,
+        borderRadius: 10,
+        margin: 10,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        height: 70,
+        alignItems: 'center',
+        paddingHorizontal: 20
+      }}
+      >
+      <Text
+        fontSize={16}
+        textAlign={'center'}
+        color={COLORS.light} 
+      >
+        {todaysQn.activeDailyCodingChallengeQuestion.question.title}
+      </Text>
+      <Box
+      flexDirection="row"
+      alignItems="center"
+      >
+      <Icons name="check-circle-outline" size={30} color={'green'} />
+      <Text
+        fontSize={16}
+        textAlign={'center'}
+        color={COLORS.light}
+        marginLeft={2}
+      >
+        {todaysQn.activeDailyCodingChallengeQuestion.question.acRate.toFixed(2)}%
+      </Text>
+      </Box>
+      </Pressable>
+
     </ScrollView>
   );
 }

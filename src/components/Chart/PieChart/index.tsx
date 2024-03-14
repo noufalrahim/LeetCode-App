@@ -2,23 +2,27 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
 import {Box} from 'native-base';
+import { all } from 'axios';
 
-const PieChartExample = ({Data}: any) => {
-  console.log('Data in PieChartExample: ');
-  console.log(Data);
-
+const PieChartExample = ({Data, allData}: any) => {
   const [population, setPopulation] = React.useState({
     easy: 0,
     medium: 0,
     hard: 0,
   });
 
+  const [allDataPopulation, setAllDataPopulation] = React.useState({
+    easy: 0,
+    medium: 0,
+    hard: 0,
+  });
+
   React.useEffect(() => {
-    if (Data.status === 'success') {
+    if (Data[1] != undefined && Data.length > 0 && allData.length > 0) {
       setPopulation({
-        easy: (Data.easySolved / Data.totalEasy) * 100,
-        medium: (Data.mediumSolved / Data.totalMedium) * 100,
-        hard: (Data.hardSolved / Data.totalHard) * 100,
+        easy: (Data[1].count / allData[1].count) * 100,
+        medium: (Data[2].count / allData[2].count) * 100,
+        hard: (Data[3].count / allData[3].count) * 100,
       });
     }
   }, [Data]);

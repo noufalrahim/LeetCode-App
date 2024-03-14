@@ -54,9 +54,50 @@ import About from './src/screens/About';
 import Home from './src/screens/Home';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useColorScheme} from 'react-native';
+import {
+  getGlobalData,
+  getSiteAnnouncements,
+  getUserPublicProfile,
+  getLanguageStats,
+  getSkillStats,
+  getUserContestRankingInfo,
+  getUserProblemsSolved,
+  getUserBadges,
+  getUserProfileCalendar,
+  getRecentAcSubmissions,
+  getStreakCounter,
+  getCurrentTimestamp,
+  getQuestionOfToday,
+  getCodingChallengeMedal,
+  getUserProfileActiveBadge,
+} from './src/api';
+import RecentSubScreen from './src/screens/RecentSubmissions';
 function App() {
   const Tab = createBottomTabNavigator();
   const isDarkMode = useColorScheme() === 'dark';
+  const [data, setData] = React.useState({
+    About: {},
+    recentSubmission: {},
+    problemSolved: {},
+    submissionCalender: {}
+  });
+
+  const fetchUserInfo = async () => {
+    const username = 'noufalrahim';
+    try{
+    const userPublicProfile = await getUserPublicProfile(username);
+    setData((prev) => ({...prev, About: userPublicProfile}));
+
+    const recentAcSubmissions = await getRecentAcSubmissions(username, 25);
+    setData((prev) => ({...prev, recentSubmission: recentAcSubmissions}));
+    }catch(error){
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   return (
     <NavigationContainer>
@@ -92,6 +133,18 @@ function App() {
           <Tab.Screen
             name="Home"
             component={Home}
+            initialParams={data.submissionCalender ? data.submissionCalender : {}}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color, size}) => (
+                <Icon name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="RecentSubmissions"
+            component={RecentSubScreen}
+            initialParams={data.recentSubmission ? data.recentSubmission : {}}
             options={{
               headerShown: false,
               tabBarIcon: ({color, size}) => (
@@ -102,6 +155,7 @@ function App() {
           <Tab.Screen
             name="About"
             component={About}
+            initialParams={data.About}
             options={{
               headerShown: false,
               tabBarIcon: ({color, size}) => (

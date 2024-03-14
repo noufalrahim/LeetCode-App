@@ -11,13 +11,14 @@ export default function HeatMap({Data}: {Data: any}) {
   >([]);
 
   const isDarkMode = useColorScheme() === 'dark';
-
+  console.log('Data', Data);
   React.useEffect(() => {
-    if (Data.status === 'success') {
+    if (Data.submissionCalender != undefined && Data.submissionCalender != null) {
       const outputArray = convertToObjectArray(Data.submissionCalendar);
+      console.log('outputArray', outputArray);
       setCommitsData(outputArray);
     }
-  }, [Data]);
+  }, [Data.submissionCalendar]);
 
   const chartConfig = {
     backgroundGradientFrom: `${isDarkMode ? COLORS.dark : COLORS.light}`,
