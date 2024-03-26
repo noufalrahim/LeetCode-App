@@ -1,35 +1,31 @@
 import React from 'react';
 import {Box} from 'native-base';
-import {Dimensions, useColorScheme} from 'react-native';
+import {Dimensions} from 'react-native';
 import {ContributionGraph} from 'react-native-chart-kit';
 import {COLORS} from '../../../../util/AppConstants';
 import {convertToObjectArray} from '../../../../util/TimeStampConverter';
 
-export default function HeatMap({Data}: {Data: any}) {
+export default function HeatMap({Data}: {Data: object}) {
   const [commitsData, setCommitsData] = React.useState<
     {date: string; count: any}[]
   >([]);
-
-  const isDarkMode = useColorScheme() === 'dark';
-  console.log('Data', Data);
   React.useEffect(() => {
-    if (Data.submissionCalender != undefined && Data.submissionCalender != null) {
-      const outputArray = convertToObjectArray(Data.submissionCalendar);
-      console.log('outputArray', outputArray);
+    if (Data !== undefined) {
+      const outputArray = convertToObjectArray(Data);
       setCommitsData(outputArray);
     }
-  }, [Data.submissionCalendar]);
+  }, [Data]);
 
   const chartConfig = {
-    backgroundGradientFrom: `${isDarkMode ? COLORS.dark : COLORS.light}`,
-    backgroundGradientTo: `${isDarkMode ? COLORS.dark : COLORS.light}`,
+    backgroundGradientFrom: `${COLORS.dark}`,
+    backgroundGradientTo: `${COLORS.dark}`,
     color: (opacity = 1) => `rgba(16, 153, 50, ${opacity})`,
   };
 
   const date = new Date();
   return (
     <Box
-      backgroundColor={isDarkMode ? COLORS.light : COLORS.dark}
+      backgroundColor={COLORS.light}
       borderRadius={10}
       justifyContent={'center'}
       marginY={5}>

@@ -44,7 +44,7 @@ export async function getGlobalData(): Promise<GlobalData> {
     }
   `;
 
-  const response = await axios.post(leetCodeApiUrl, { query });
+  const response = await axios.post(leetCodeApiUrl, {query});
   return response.data.data as GlobalData;
 }
 
@@ -61,11 +61,13 @@ export async function getSiteAnnouncements(): Promise<SiteAnnouncement> {
     }
   `;
 
-  const response = await axios.post(leetCodeApiUrl, { query });
+  const response = await axios.post(leetCodeApiUrl, {query});
   return response.data.data as SiteAnnouncement;
 }
 
-export async function getUserPublicProfile(username: string): Promise<UserProfile> {
+export async function getUserPublicProfile(
+  username: string,
+): Promise<UserProfile> {
   const query = `
     query userPublicProfile($username: String!) {
       matchedUser(username: $username) {
@@ -103,13 +105,15 @@ export async function getUserPublicProfile(username: string): Promise<UserProfil
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data.matchedUser as UserProfile;
 }
 
-export async function getLanguageStats(username: string): Promise<LanguageStatsQuery> {
+export async function getLanguageStats(
+  username: string,
+): Promise<LanguageStatsQuery> {
   const query = `
     query languageStats($username: String!) {
       matchedUser(username: $username) {
@@ -121,13 +125,15 @@ export async function getLanguageStats(username: string): Promise<LanguageStatsQ
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as LanguageStatsQuery;
 }
 
-export async function getSkillStats(username: string): Promise<SkillStatsQuery> {
+export async function getSkillStats(
+  username: string,
+): Promise<SkillStatsQuery> {
   const query = `
     query skillStats($username: String!) {
       matchedUser(username: $username) {
@@ -152,13 +158,15 @@ export async function getSkillStats(username: string): Promise<SkillStatsQuery> 
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as SkillStatsQuery;
 }
 
-export async function getUserContestRankingInfo(username: string): Promise<ContestRankingInfo> {
+export async function getUserContestRankingInfo(
+  username: string,
+): Promise<ContestRankingInfo> {
   const query = `
     query userContestRankingInfo($username: String!) {
       userContestRanking(username: $username) {
@@ -187,13 +195,15 @@ export async function getUserContestRankingInfo(username: string): Promise<Conte
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as ContestRankingInfo;
 }
 
-export async function getUserProblemsSolved(username: string): Promise<UserProblemsSolvedQuery> {
+export async function getUserProblemsSolved(
+  username: string,
+): Promise<UserProblemsSolvedQuery> {
   const query = `
     query userProblemsSolved($username: String!) {
       allQuestionsCount {
@@ -215,13 +225,15 @@ export async function getUserProblemsSolved(username: string): Promise<UserProbl
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as UserProblemsSolvedQuery;
 }
 
-export async function getUserBadges(username: string): Promise<UserBadgesQuery> {
+export async function getUserBadges(
+  username: string,
+): Promise<UserBadgesQuery> {
   const query = `
     query userBadges($username: String!) {
       matchedUser(username: $username) {
@@ -251,13 +263,16 @@ export async function getUserBadges(username: string): Promise<UserBadgesQuery> 
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as UserBadgesQuery;
 }
 
-export async function getUserProfileCalendar(username: string, year: number): Promise<UserProfileCalendarQuery> {
+export async function getUserProfileCalendar(
+  username: string,
+  year: number,
+): Promise<UserProfileCalendarQuery> {
   const query = `
     query userProfileCalendar($username: String!, $year: Int) {
       matchedUser(username: $username) {
@@ -278,13 +293,16 @@ export async function getUserProfileCalendar(username: string, year: number): Pr
     }
   `;
 
-  const variables = { username, year };
+  const variables = {username, year};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as UserProfileCalendarQuery;
 }
 
-export async function getRecentAcSubmissions(username: string, limit: number): Promise<RecentAcSubmissionsQuery> {
+export async function getRecentAcSubmissions(
+  username: string,
+  limit: number,
+): Promise<RecentAcSubmissionsQuery> {
   const query = `
     query recentAcSubmissions($username: String!, $limit: Int!) {
       recentAcSubmissionList(username: $username, limit: $limit) {
@@ -296,9 +314,9 @@ export async function getRecentAcSubmissions(username: string, limit: number): P
     }
   `;
 
-  const variables = { username, limit };
+  const variables = {username, limit};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as RecentAcSubmissionsQuery;
 }
 
@@ -313,7 +331,7 @@ export async function getStreakCounter(): Promise<StreakCounterQuery> {
     }
   `;
 
-  const response = await axios.post(leetCodeApiUrl, { query });
+  const response = await axios.post(leetCodeApiUrl, {query});
   return response.data.data as StreakCounterQuery;
 }
 
@@ -324,7 +342,7 @@ export async function getCurrentTimestamp(): Promise<CurrentTimestampQuery> {
     }
   `;
 
-  const response = await axios.post(leetCodeApiUrl, { query });
+  const response = await axios.post(leetCodeApiUrl, {query});
   return response.data.data as CurrentTimestampQuery;
 }
 
@@ -357,11 +375,14 @@ export async function getQuestionOfToday(): Promise<QuestionOfTodayQuery> {
     }
   `;
 
-  const response = await axios.post(leetCodeApiUrl, { query });
+  const response = await axios.post(leetCodeApiUrl, {query});
   return response.data.data as QuestionOfTodayQuery;
 }
 
-export async function getCodingChallengeMedal(year: number, month: number): Promise<CodingChallengeMedalQuery> {
+export async function getCodingChallengeMedal(
+  year: number,
+  month: number,
+): Promise<CodingChallengeMedalQuery> {
   const query = `
     query codingChallengeMedal($year: Int!, $month: Int!) {
       dailyChallengeMedal(year: $year, month: $month) {
@@ -373,13 +394,15 @@ export async function getCodingChallengeMedal(year: number, month: number): Prom
     }
   `;
 
-  const variables = { year, month };
+  const variables = {year, month};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as CodingChallengeMedalQuery;
 }
 
-export async function getUserProfileActiveBadge(username: string): Promise<UserProfileActiveBadgeQuery> {
+export async function getUserProfileActiveBadge(
+  username: string,
+): Promise<UserProfileActiveBadgeQuery> {
   const query = `
     query getUserProfile($username: String!) {
       matchedUser(username: $username) {
@@ -391,8 +414,8 @@ export async function getUserProfileActiveBadge(username: string): Promise<UserP
     }
   `;
 
-  const variables = { username };
+  const variables = {username};
 
-  const response = await axios.post(leetCodeApiUrl, { query, variables });
+  const response = await axios.post(leetCodeApiUrl, {query, variables});
   return response.data.data as UserProfileActiveBadgeQuery;
 }

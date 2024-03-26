@@ -1,12 +1,8 @@
 import {Box, Progress, Text} from 'native-base';
 import React from 'react';
-
-import {useColorScheme} from 'react-native';
 import {COLORS} from '../../../util/AppConstants';
 
 export default function Statistics({Data, allData}: any) {
-  const isDarkMode = useColorScheme() === 'dark';
-
   const [statistics, setStatistics] = React.useState({
     easySolved: 0,
     mediumSolved: 0,
@@ -43,66 +39,57 @@ export default function Statistics({Data, allData}: any) {
 
   return (
     <Box justifyContent={'center'}>
-      <Box
-        backgroundColor={isDarkMode ? COLORS.dark : COLORS.light}
-        margin={5}
-        borderRadius={10}>
+      <Box backgroundColor={COLORS.dark} margin={5} borderRadius={10}>
         <Box flexDirection={'row'} justifyContent={'space-between'}>
           <Text
             fontSize={20}
             textAlign={'left'}
-            color={isDarkMode ? COLORS.light : COLORS.dark}
+            color={COLORS.light}
             marginBottom={2}>
             Easy
           </Text>
           <Text
             fontSize={20}
             textAlign={'right'}
-            color={isDarkMode ? COLORS.light : COLORS.dark}
+            color={COLORS.light}
             marginBottom={2}>
             {statistics.easySolved}/{statistics.totalEasy}
           </Text>
         </Box>
         <Progress value={percentage.easy} colorScheme="emerald" />
       </Box>
-      <Box
-        backgroundColor={isDarkMode ? COLORS.dark : COLORS.light}
-        margin={5}
-        borderRadius={10}>
+      <Box backgroundColor={COLORS.dark} margin={5} borderRadius={10}>
         <Box flexDirection={'row'} justifyContent={'space-between'}>
           <Text
             fontSize={20}
             textAlign={'left'}
-            color={isDarkMode ? COLORS.light : COLORS.dark}
+            color={COLORS.light}
             marginBottom={2}>
             Medium
           </Text>
           <Text
             fontSize={20}
             textAlign={'right'}
-            color={isDarkMode ? COLORS.light : COLORS.dark}
+            color={COLORS.light}
             marginBottom={2}>
             {statistics.mediumSolved}/{statistics.totalMedium}
           </Text>
         </Box>
         <Progress value={percentage.medium} colorScheme="warning" />
       </Box>
-      <Box
-        backgroundColor={isDarkMode ? COLORS.dark : COLORS.light}
-        margin={5}
-        borderRadius={10}>
+      <Box backgroundColor={COLORS.dark} margin={5} borderRadius={10}>
         <Box flexDirection={'row'} justifyContent={'space-between'}>
           <Text
             fontSize={20}
             textAlign={'left'}
-            color={isDarkMode ? COLORS.light : COLORS.dark}
+            color={COLORS.light}
             marginBottom={2}>
             Hard
           </Text>
           <Text
             fontSize={20}
             textAlign={'right'}
-            color={isDarkMode ? COLORS.light : COLORS.dark}
+            color={COLORS.light}
             marginBottom={2}>
             {statistics.hardSolved}/{statistics.totalHard}
           </Text>

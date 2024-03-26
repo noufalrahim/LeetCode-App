@@ -1,3 +1,5 @@
+import {Alert, Linking} from 'react-native';
+
 export const CONSTANTS = {
   APP_NAME: 'LeetCode',
   APP_VERSION: '1.0.0',
@@ -15,93 +17,38 @@ export const COLORS = {
   light: '#FFFFFF',
 };
 
-// export const API = {
-//     BASE_URL: 'https://leetcode.com/api',
-//     PROBLEMS: '/problems/all',
-//     PROBLEM: '/problems/',
-//     GRAPHQL: '/graphql',
-//     GRAPHQL_ENDPOINT: 'https://leetcode.com/graphql',
-//     GRAPHQL_QUERY: `
-//     query questionData($titleSlug: String!) {
-//       question(titleSlug: $titleSlug) {
-//         questionId
-//         questionFrontendId
-//         title
-//         titleSlug
-//         content
-//         difficulty
-//         stats
-//         similarQuestions
-//         topicTags {
-//           name
-//           slug
-//         }
-//       }
-//     }
-//     `,
-//     GRAPHQL_HEADERS: {
-//         'Content-Type': 'application/json',
-//         'x-csrftoken': 'undefined',
-//         'x-definition-name': 'questionData',
-//         'x-operation-name': 'questionData',
-//     },
-//     GRAPHQL_METHOD: 'POST',
-//     GRAPHQL_MODE: 'cors',
-//     GRAPHQL_CREDENTIALS: 'include',
-//     GRAPHQL_REDIRECT: 'follow',
-//     GRAPHQL_REFERRER: 'https://leetcode.com/problems/two-sum/',
-//     GRAPHQL_USER_AGENT: 'Mozilla/5.0',
-//     GRAPHQL_ORIGIN: 'https://leetcode.com',
-//     GRAPHQL_HOST: 'leetcode.com',
-//     GRAPHQL_ACCEPT: '*/*',
-//     GRAPHQL_ACCEPT_ENCODING: 'gzip, deflate, br',
-//     GRAPHQL_ACCEPT_LANGUAGE: 'en-US,en;q=0.9',
-//     GRAPHQL_BODY: {
-//         operationName: 'questionData',
-//         variables: {
-//             titleSlug: 'two-sum',
-//         },
-//         query: `
-//         query questionData($titleSlug: String!) {
-//           question(titleSlug: $titleSlug) {
-//             questionId
-//             questionFrontendId
-//             title
-//             titleSlug
-//             content
-//             difficulty
-//             stats
-//             similarQuestions
-//             topicTags {
-//               name
-//               slug
-//             }
-//           }
-//         }
-//         `,
-//     },
-//     GRAPHQL_BODY_TWO_SUM: {
-//         operationName: 'questionData',
-//         variables: {
-//             titleSlug: 'two-sum',
-//         },
-//         query: `
-//         query questionData($titleSlug: String!) {
-//           question(titleSlug: $titleSlug) {
-//             questionId
-//             questionFrontendId
-//             title
-//             titleSlug
-//             content
-//             difficulty
-//             stats
-//             similarQuestions
-//             topicTags {
-//               name
-//               slug
-//             }
-//           }
-//         }
-//         `,
-//     },
-// }
+export const RECENTPROBLEMSCOUNT = 100;
+export const RECENTPROBLEMSCOUNTSEARCH = 10;
+
+export const settingsTiles = [
+  {
+    title: 'About',
+    icon: 'info-outline',
+    onPress: () => {
+      Alert.alert(
+        'About',
+        'LeetCode is a platform for learning and practicing coding skills.',
+      );
+    },
+  },
+  {
+    title: 'Help',
+    icon: 'help-outline',
+    onPress: () =>
+      Alert.alert(
+        'Help',
+        'For any help, please contact us at \nnoufalrahim6784@gmail.com',
+      ),
+  },
+  {
+    title: 'Github Reository',
+    icon: 'chevron-right',
+    onPress: () =>
+      Linking.openURL('https://github.com/noufalrahim/LeetCode-App'),
+  },
+  {
+    title: 'Logout',
+    icon: 'logout',
+    onPress: () => {},
+  },
+];

@@ -2,16 +2,9 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
 import {Box} from 'native-base';
-import { all } from 'axios';
 
 const PieChartExample = ({Data, allData}: any) => {
   const [population, setPopulation] = React.useState({
-    easy: 0,
-    medium: 0,
-    hard: 0,
-  });
-
-  const [allDataPopulation, setAllDataPopulation] = React.useState({
     easy: 0,
     medium: 0,
     hard: 0,
